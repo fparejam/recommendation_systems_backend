@@ -65,15 +65,16 @@ def home():
 @app.route('/recommend', methods=['POST'])
 def recommend():
     data = request.get_json()
-    title = data.get('Title', None)
-    logging.debug(title)
-    if title:
-        recommendations = get_recommendations(title)
+    logging.debug(data)
+    if len(data) == 1:
+        recommendations = get_recommendations(data[0]['Title'])
     else:
-        movie_list = data.get("movie_list", [])
-        recommendations = get_combined_recommendations(movie_list)
+        titles = [movie['Title'] for movie in data]
+        logging.debug(titles)
+        recommendations = get_combined_recommendations(titles)
 
     return jsonify(recommendations)
+
 
 if __name__ == "__main__":
     app.run()
