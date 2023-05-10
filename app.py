@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import logging
 import pandas as pd
 import numpy as np
@@ -26,6 +27,7 @@ cosine_sim = cosine_similarity(tfidf_matrix)
 indices = pd.Series(df.index, index=df['Title']).drop_duplicates()
 
 app = Flask(__name__)
+CORS(app)
 
 # define recommendation functions
 def get_recommendations(title, cosine_sim=cosine_sim, num_recommend=10):
