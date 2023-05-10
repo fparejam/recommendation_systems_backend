@@ -65,7 +65,7 @@ def home():
 @app.route('/recommend', methods=['POST'])
 def recommend():
     data = request.get_json()
-    title = data.get('title', None)
+    title = data.get('Title', None)
     logging.debug(title)
     if title:
         recommendations = get_recommendations(title)
