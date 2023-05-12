@@ -97,7 +97,7 @@ The response will be a JSON object containing an array of recommended movies.
 ```
 ## Example Usage
 
-Make a POST request to `http://localhost:5000/recommend` with the appropriate request format to get movie recommendations based on the provided movie data.
+Make a POST request to `http://localhost:5000/recommend` with the appropriate request format to get movie recommendations based on the provided movie data. The app is currently being hosted on railway [https://recommendationsystemsbackend-production.up.railway.app/](movies_backend), although the server might not be running continuously.
 
 ## Contributing
 
