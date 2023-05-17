@@ -30,7 +30,7 @@ app = Flask(__name__)
 CORS(app)
 
 # define recommendation functions
-def get_recommendations(title, cosine_sim=cosine_sim, num_recommend=10):
+def get_recommendations(title, cosine_sim=cosine_sim, num_recommend=20):
     idx = indices[title]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
@@ -39,7 +39,7 @@ def get_recommendations(title, cosine_sim=cosine_sim, num_recommend=10):
     final_recommendation = df.iloc[movie_indices][['Title', 'Director', 'Genre', 'Plot', 'imdbRating', 'Poster']].to_dict('records')
     return final_recommendation
 
-def get_combined_recommendations(movie_list, num_recommend=10):
+def get_combined_recommendations(movie_list, num_recommend=20):
     combined_sim_scores = np.zeros(cosine_sim.shape[0])
 
     for movie_title in movie_list:
@@ -54,7 +54,8 @@ def get_combined_recommendations(movie_list, num_recommend=10):
     recommended_movies = []
     for i in movie_indices:
         if df['Title'].iloc[i] not in movie_list:
-            recommended_movies.append(df['Title'].iloc[i])
+            movie_details = df.iloc[i][['Title', 'Director', 'Genre', 'Plot', 'imdbRating', 'Poster']].to_dict()
+            recommended_movies.append(movie_details)
 
     return recommended_movies
 
@@ -68,11 +69,15 @@ def recommend():
     logging.debug(data)
     if len(data) == 1:
         recommendations = get_recommendations(data[0]['Title'])
-    else:
-        titles = [movie['Title'] for movie in data]
-        logging.debug(titles)
-        recommendations = get_combined_recommendations(titles)
+    return jsonify(recommendations)
 
+@app.route('/multiple_recommend', methods=['POST'])
+def multiple_recommend():
+    data = request.get_json()
+    logging.debug(data)
+    titles = [movie['Title'] for movie in data]
+    logging.debug(titles)
+    recommendations = get_combined_recommendations(titles)
     return jsonify(recommendations)
 
 
