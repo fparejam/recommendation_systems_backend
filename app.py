@@ -36,7 +36,7 @@ def get_recommendations(title, cosine_sim=cosine_sim, num_recommend=20):
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     top_similar = sim_scores[1:num_recommend+1]
     movie_indices = [i[0] for i in top_similar]
-    final_recommendation = df.iloc[movie_indices][['Title', 'Director', 'Genre', 'Plot', 'imdbRating', 'Poster']].to_dict('records')
+    final_recommendation = df.iloc[movie_indices][['Title', 'Plot', 'Poster']].to_dict('records')
     return final_recommendation
 
 def get_combined_recommendations(movie_list, num_recommend=20):
@@ -54,7 +54,7 @@ def get_combined_recommendations(movie_list, num_recommend=20):
     recommended_movies = []
     for i in movie_indices:
         if df['Title'].iloc[i] not in movie_list:
-            movie_details = df.iloc[i][['Title', 'Director', 'Genre', 'Plot', 'imdbRating', 'Poster']].to_dict()
+            movie_details = df.iloc[i][['Title', 'Plot', 'Poster']].to_dict()
             recommended_movies.append(movie_details)
 
     return recommended_movies
