@@ -99,6 +99,8 @@ The response will be a JSON object containing an array of recommended movies.
 
 Make a POST request to `http://localhost:5000/recommend` with the appropriate request format to get movie recommendations based on the provided movie data. The app is currently being hosted on railway [https://recommendationsystemsbackend-production.up.railway.app/](movies_backend), although the server might not be running continuously.
 
+### `POST /multiple_recommend`
+
 ## Contributing
 
 Contributions are welcome! If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request on GitHub.
